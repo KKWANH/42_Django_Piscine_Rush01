@@ -1,6 +1,10 @@
+import os
+from pathlib import Path
+
 SECRET_KEY = 'django-insecure-3a^-4@0)wq_*333$s8+yqd@zxtpcug1#0og5mtdrw*1(sdskbi'
 DEBUG = True
 ALLOWED_HOSTS = []
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 INSTALLED_APPS = [
 	'django.contrib.admin',
@@ -9,6 +13,7 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'Site'
 ]
 
 MIDDLEWARE = [
@@ -70,3 +75,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
