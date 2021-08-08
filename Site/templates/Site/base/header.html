@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark transparent">
 	<div class="container">
 		<a	class="navbar-brand"
-			href="{% url 'Site:index' %}">
+			href="{% url 'Site:main' %}">
 			🚦Rush01🚦
 		</a>
 		<div class="container-fluid" id="navbarSupportedContent">
@@ -10,11 +10,12 @@
 			</div>
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a	class="nav-link active"
+					<!-- <a	class="nav-link active"
 						aria-current="page"
-						href="{% url 'Site:post' %}">
+						href="{ % url 'Site:post' %}"> -->
 						New Post
-					</a>
+					<!-- </a> -->
+
 				</li>
 				{% if user.is_authenticated %}
 					<li class="nav-item dropdown">
@@ -27,17 +28,17 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a	class="dropdown-item"
-									href="{% url 'Site:profile-detail' user.id %}">
+								<!-- <a	class="dropdown-item"
+									href="{ % url 'Site:profile-detail' user.id %}"> -->
 									Profile
-								</a>
+								<!-- </a> -->
 							</li>
 							{% if user.is_staff %}
 								<li>
-									<a	class="dropdown-item"
-										href="/admin">
+									<!-- <a	class="dropdown-item"
+										href="/admin"> -->
 										Admin
-									</a>
+									<!-- </a> -->
 								</li>
 							{% endif %}
 						<li>
