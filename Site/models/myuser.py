@@ -9,3 +9,6 @@ class	MyUser(models.Model):
 		lastName		= models.CharField(max_length=25, null=False)
 		description		= models.TextField(max_length=420, null=False)
 		profileImage	= models.ImageField()
+
+		def __str__(self):
+			return self.nickname

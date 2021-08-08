@@ -7,4 +7,5 @@ class Message(models.Model):
 	sender = models.ForeignKey(MyUser, on_delete=CASCADE, related_name="messageSent")
 	receiver = models.ForeignKey(MyUser, on_delete=CASCADE, related_name="messageReceived")
 	content = models.TextField()
+	last = models.BooleanField(default=True)
 	created = models.DateTimeField(auto_now_add=True)
