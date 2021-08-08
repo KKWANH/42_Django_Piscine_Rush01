@@ -1,0 +1,53 @@
+{% extends 'Site/base/base.html' %}
+
+{% block title %}
+Discussion List
+{% endblock title %}
+
+{% block content %}
+<br>
+<h2 style="text-align: center;">Discussion List</h2>
+<br><br>
+<div class="card-columns" style="min-height: 70vh;">
+{% if object_list %}
+	{% for item in object_list %}
+		<div class="card p-6 bg-light border-light">
+			<div class="card-header">
+			{% if item.sender.nickName == request.user.nickName %}
+				<a href="{% url 'Site:discussionDetail' user1=request.user.nickName user2=item.receiver.nickName %}">
+					Discussion with {{ item.receiver.nickName }}</a>
+			{% else %}
+				<a href="{% url 'Site:discussionDetail' user1=request.user.nickName user2=item.sender.nickName %}">
+					Discussion with {{ item.sender.nickName }}</a>
+			{% endif %}
+			</div>
+			<div class="card-body text-dark">
+				<p>From: {{ item.sender.nickName }}</p>
+				<p>To: {{ item.receiver.nickName }}</p>
+				<p>{{ item.content|truncatechars:30 }}</p>
+			</div>
+			<div class="card-footer text-muted">
+				<p>{{ item.created }}</p>
+			</div>
+		</div><br>
+	{% endfor %}
+{% else %}
+	<h3 style="align-self: center;">No Discussion</h3>
+{% endif %}
+</div>
+	<div class="pagination" style="justify-content: center;">
+		<span class="step-links">
+		{% if page_obj.has_previous %}
+			<a href="?page=1">&laquo; First</a>
+			<a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+		{% endif %}
+			<span class="current">
+			Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			</span>
+		{% if page_obj.has_next %}
+			<a href="?page={{ page_obj.next_page_number }}">Next</a>
+			<a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+		{% endif %}
+		</span>
+	</div>
+{% endblock content %}

@@ -15,7 +15,6 @@ urlpatterns = [
 	path('discussions/',		views.DiscussionListView.as_view(), 	name='discussionList'),
 	path('discussions/<str:user1>&<str:user2>/',
 								views.DiscussionDetailView.as_view(),	name='discussionDetail'),
-
-	re_path(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
-	re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+	re_path(r'^media/(?P<path>.*)$',	serve,	{'document_root':settings.MEDIA_ROOT}),
+	re_path(r'^static/(?P<path>.*)$',	serve,	{'document_root': settings.STATIC_ROOT}),
 ]

@@ -13,8 +13,13 @@
 					<!-- <a	class="nav-link active"
 						aria-current="page"
 						href="{ % url 'Site:post' %}"> -->
-						New Post
+						<!--New Post--!>
 					<!-- </a> -->
+					<a	class="nav-link active"
+						aria-current="page"
+						href="{% url 'Site:discussionList' %}">
+						Discussions
+					</a>
 
 				</li>
 				{% if user.is_authenticated %}
@@ -28,17 +33,17 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>
-								<!-- <a	class="dropdown-item"
-									href="{ % url 'Site:profile-detail' user.id %}"> -->
+								<a	class="dropdown-item"
+									href="{% url 'Site:profile' pk=request.user.nickName%}">
 									Profile
-								<!-- </a> -->
+								</a>
 							</li>
-							{% if user.is_staff %}
+							{% if user.is_admin %}
 								<li>
-									<!-- <a	class="dropdown-item"
-										href="/admin"> -->
+									<a	class="dropdown-item"
+										href="/admin">
 										Admin
-									<!-- </a> -->
+									</a>
 								</li>
 							{% endif %}
 						<li>

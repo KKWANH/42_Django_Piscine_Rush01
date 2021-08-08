@@ -1,7 +1,7 @@
 from	django							import	forms
 from 	django.db						import	models
-from 	django.db.models.deletion 		import	CASCADE
 from 	django.contrib.auth.models 		import	BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import Permission
 
 class	UserManager(BaseUserManager):
 		def	create_user(self, nickName, email, password=None):
@@ -18,13 +18,14 @@ class	UserManager(BaseUserManager):
 			_usr.set_password(password)
 			_usr.save(using=self._db)
 			return	_usr
-		
+
 		def	create_superuser(self, nickName, email, password):
 			_usr = self.create_user(
 				nickName	= nickName,
 				email		= email,
 				password	= password,)
 			_usr.is_admin = True
+			_usr.is_superuser = True
 			_usr.save(using=self._db)
 			return	_usr
 
@@ -39,6 +40,7 @@ class	MyUser(AbstractBaseUser):
 
 		is_active		= models.BooleanField(default=True)
 		is_admin		= models.BooleanField(default=False)
+		is_superuser	= models.BooleanField(default=False)
 
 		objects			= UserManager()
 		USERNAME_FIELD	= 'nickName'
