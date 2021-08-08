@@ -8,3 +8,8 @@ body
 {
 	min-height: calc(100vh - 120px);
 }
+
+
+fieldset[disabled] > div > input,  fieldset[disabled] > div > textarea {
+	background-color: white;
+}
