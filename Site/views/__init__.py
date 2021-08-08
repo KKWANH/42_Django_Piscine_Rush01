@@ -4,3 +4,4 @@ from	.logout							import	*
 from	.register						import	*
 from	.message						import	*
 from	.profile						import	*
+from	.post							import	*

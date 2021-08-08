@@ -1,31 +1,31 @@
 {% extends 'Site/base/base.html' %}
 
 {% block title %}
-Discussion Detail
+	Discussion Detail
 {% endblock title %}
 
 {% block content %}
-<h2 style="text-align: center;">Discussion with {{ view.kwargs.user2 }}</h2>
-<br><br>
-<fieldset style="height:70vh;overflow-y:scroll;margin-right: 10%;margin-left:10%;border: solid;padding-top:1%;padding-bottom: 1%;margin-bottom: 3%;">
-{% if object_list %}
-	{% for item in object_list %}
-		{% if item.sender.nickName == request.user.nickName %}
-			<div style='text-align:right;padding-right:5%;'>
+	<h2 style="text-align: center;">Discussion with {{ view.kwargs.user2 }}</h2>
+	<br><br>
+	<fieldset style="height:70vh;overflow-y:scroll;margin-right: 10%;margin-left:10%;border: solid;padding-top:1%;padding-bottom: 1%;margin-bottom: 3%;">
+		{% if object_list %}
+			{% for item in object_list %}
+				{% if item.sender.nickName == request.user.nickName %}
+					<div style='text-align:right;padding-right:5%;'>
+				{% else %}
+					<div style='text-align:left;padding-left:5%'>
+				{% endif %}
+				<p>{{ item.content }}</p>
+				<p>({{ item.created }})</p>
+				</div><br>
+			{% endfor %}
 		{% else %}
-			<div style='text-align:left;padding-left:5%'>
+			<p>No Discussion</p>
 		{% endif %}
-		<p>{{ item.content }}</p>
-		<p>({{ item.created }})</p>
-		</div><br>
-	{% endfor %}
-{% else %}
-	<p>No Discussion</p>
-{% endif %}
-</fieldset>
-<form style="text-align: center;" method="POST">
-	{% csrf_token %}
-	<textarea type="text" style="width:60vw" name='content'></textarea><br>
-	<button type="submit">Submit</button>
-</form>
+	</fieldset>
+	<form style="text-align: center;" method="POST">
+		{% csrf_token %}
+		<textarea type="text" style="width:60vw" name='content'></textarea><br>
+		<button type="submit">Submit</button>
+	</form>
 {% endblock content %}
