@@ -7,13 +7,14 @@ ALLOWED_HOSTS = ['localhost']
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 INSTALLED_APPS = [
-	'django.contrib.admin',
+	# 'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-	'Site.apps.SiteConfig'
+	'bootstrap4',
+	'Site.apps.SiteConfig',
 ]
 
 MIDDLEWARE = [
@@ -79,3 +80,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTH_USER_MODEL = 'Site.MyUser'

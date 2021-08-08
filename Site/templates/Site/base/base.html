@@ -1,23 +1,23 @@
-{% load statics %}
+{% load static %}
 {% load bootstrap4 %}
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<title>{% block title %}{% endblock title %} 🌆</title>
-		<!-- { % bootstrap_javascript jquery='full' %} -->
-		<!-- { % bootstrap_css %} -->
+		<title>{% block title %}{% endblock title %} - 🌆</title>
+		{% bootstrap_javascript jquery='full' %}
+		{% bootstrap_css %}
 		<link rel="stylesheet" href="{% static 'Site/rush01.css' %}" />
 	</head>
 	<body>
-		<!-- { % include 'Site/base/header.html' %} -->
-		<div class="container">
+		{% include 'Site/base/header.html' %}
+		<div class="container py-2" style="min-height: calc(100vh - 60px - 60px);">
 			{% bootstrap_messages %}
 			{% block content %}
 				<h1>tmp</h1>
 			{% endblock content %}
 		</div>
-		<!-- { % include 'Site/base/footer.html' %} -->
+		{% include 'Site/base/footer.html' %}
 	</body>
 </html>

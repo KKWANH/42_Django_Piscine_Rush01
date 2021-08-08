@@ -4,7 +4,6 @@ from 	Site.models.myuser		 		import MyUser
 
 
 class	Post(models.Model):
-
 		id			= models.AutoField(primary_key=True)
 		userID		= models.ForeignKey(MyUser, on_delete=CASCADE, related_name="post")
 		title		= models.CharField(max_length=40)
