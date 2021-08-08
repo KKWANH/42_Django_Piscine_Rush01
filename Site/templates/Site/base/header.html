@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark transparent">
+	<div class="container">
+		<a	class="navbar-brand"
+			href="{% url 'Site:index' %}">
+			🚦Rush01🚦
+		</a>
+		<div class="container-fluid" id="navbarSupportedContent">
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+			</div>
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a	class="nav-link active"
+						aria-current="page"
+						href="{% url 'Site:post' %}">
+						New Post
+					</a>
+				</li>
+				{% if user.is_authenticated %}
+					<li class="nav-item dropdown">
+						<a	class="nav-link dropdown-toggle"
+							id="navbarDropdown"
+							role="button"
+							data-toggle="dropdown"
+							aria-expanded="false">
+							{{ user }}
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a	class="dropdown-item"
+									href="{% url 'Site:profile-detail' user.id %}">
+									Profile
+								</a>
+							</li>
+							{% if user.is_staff %}
+								<li>
+									<a	class="dropdown-item"
+										href="/admin">
+										Admin
+									</a>
+								</li>
+							{% endif %}
+						<li>
+							<hr class="dropdown-divider" />
+						</li>
+						<li>
+							<a	class="dropdown-item"
+								href="{% url 'Site:logout' %}">
+								Logout
+							</a>
+						</li>
+						</ul>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a	class="nav-link"
+							href="{% url 'Site:login' %}">
+							Login
+						</a>
+					</li>
+					<li class="nav-item">
+						<a	class="nav-link"
+							href="{% url 'Site:register' %}">
+							Register
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>

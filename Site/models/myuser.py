@@ -1,7 +1,10 @@
-from 	django.db						import models
-from 	django.contrib.auth.models 		import User
-from 	django.db.models.deletion 		import CASCADE
+from 	django.db						import	models
+from 	django.db.models.deletion 		import	CASCADE
+from 	django.contrib.auth.models 		import	User
+
+
 class	MyUser(models.Model):
+
 		user			= models.OneToOneField(User, on_delete=CASCADE, related_name="myUser")
 		nickName		= models.CharField(primary_key=True, max_length=25, null=False)
 		email			= models.EmailField(unique=True)
@@ -11,4 +14,4 @@ class	MyUser(models.Model):
 		profileImage	= models.ImageField()
 
 		def __str__(self):
-			return self.nickname
+			return self.nickName
