@@ -9,18 +9,21 @@
 	<div	class="container-sm post">
 		<h1		class="post-title fw-500">{{ object.title }}</h1>
 		<div	class="d-flex align-items-center mb-4 text-muted author-info">
-			<!-- <a		class="d-flex align-items-center text-muted text-decoration-none"
-					href="{ % url 'Site:profile-detail' object.author.id %}"> -->
 			<a		class="d-flex align-items-center text-muted text-decoration-none"
-					href="#">
-				<!-- {% if object.author.profile_image %}
-					<img	class="border rounded-circle mb-0 mr-2"
-							src="{{ object.author.profile_image.url }}"
-							alt="@{{ object.author }}-profile image"
-							width="32"
-							height="32"/>
-				{% endif %} -->
-				<span>{{ object.author }}</span>
+					href="{% url 'Site:profile' object.userID %}">
+					{% if object.userID.profile_image %}
+						<img	class="border rounded-circle mb-0 mr-2"
+								src="{{ object.author.profile_image.url }}"
+								alt="@{{ object.author }}-profile image"
+								width="32"
+								height="32"/>
+					{% elif not object.userID.profile_image %}
+						<img	class="border rounded-circle mb-0 mr-2"
+								style="background-color: black;"
+								width="32"
+								height="32"/>
+					{% endif %}
+				<span>{{ object.userID }}</span>
 			</a>
 			<span	class="d-flex align-items-center ml-2"
 					title="lastedit {{ object.updateDate|date:"d.M.y P" }}"
@@ -32,18 +35,16 @@
 				</svg>
 				{{ object.creationDate|date:"d.M.y P" }}
 			</span>
-			{% if object.author == user or user.is_staff %}
-				<!-- <a		href="{% url 'Site:post-edit' object.id %}" -->
-				<a		href="#"
-						class="d-flex align-items-center ml-2 btn btn-outline-dark btn-sm" role="button">
+			{% if object.userID == user or user.is_staff %}
+				<a		href="{% url 'Site:post-edit' object.id %}"
+						class="d-flex align-items-center ml-2 btn btn-outline-light btn-sm" role="button">
 					<svg	xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square mr-2" viewBox="0 0 16 16">
 						<path	d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
 						<path	fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 					</svg>
 					edit
 				</a>
-				<!-- <a		href="{ % url 'Site:post-delete' object.id %}" -->
-				<a		href="#"
+				<a		href="{% url 'Site:post-delete' object.id %}"
 						class="d-flex align-items-center ml-2 btn btn-outline-danger btn-sm" role="button">
 					<svg	xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash mr-2" viewBox="0 0 16 16">
 						<path	d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -59,7 +60,7 @@
 		<!-- <div>
 			<hr/>
 			<form	action="{ % url 'Site:comment' object.id %}" method="post" class="form">
-				{% csrf_token %} {% bootstrap_form comment_form %}
+				{% csrf_token %} { % bootstrap_form comment_form %}
 				{% buttons %}
 				{% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
 				{% endbuttons %}

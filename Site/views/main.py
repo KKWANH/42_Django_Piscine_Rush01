@@ -9,4 +9,4 @@ class	Main(LoginRequiredMixin, ListView):
 		paginate_by		= 10
 		template_name	= 'Site/view/main.html'
 		model			= Post
-		queryset		= model.objects.order_by('-id')
+		queryset		= model.objects.filter(is_active=True).order_by('-id')
