@@ -34,7 +34,7 @@ class	PostView(LoginRequiredMixin, FormView):
 
 		def	get_success_url(self) -> str:
 			return	reverse('Site:post-detail', args=[self.instance.id])
-		
+
 		def	form_valid(self, form: PostForm) -> HttpResponse:
 			post:Post		= form.save(commit=False)
 			post.userID 	= self.request.user
@@ -57,8 +57,28 @@ class	PostDetailView(LoginRequiredMixin, DetailView):
 			_pst: Post	= _ctx['object']
 			if _pst.is_active == False:
 				raise	Http404()
+			_ctx['post_up'] = False
+			_ctx['post_down'] = False
+			if _pst.is_upvoting(self.request.user):
+				_ctx['post_up'] = True
+			if _pst.is_downvoting(self.request.user):
+				_ctx['post_down'] = True
 			return	_ctx
 
+		def post(self, request, post_id):
+			_id = self.request.POST.get('id')
+			if _id:
+				try:
+					if request.POST.get("post-up"):
+						_pst = Post.objects.get(id=_id)
+						_pst.upvote(request.user)
+					elif request.POST.get("post-down"):
+						_pst = Post.objects.get(id=_id)
+						_pst.downvote(request.user)
+					return redirect("Site:post-detail", post_id)
+				except Exception as e:
+					print(e)
+			return	redirect("Site:main")
 class	PostEditView(LoginRequiredMixin, PostUserCheckMixin, FormView):
 		template_name		= 'Site/view/post_edit.html'
 		login_url			= reverse_lazy('Site:login')

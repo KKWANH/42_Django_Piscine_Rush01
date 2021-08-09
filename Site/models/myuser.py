@@ -18,14 +18,14 @@ class	UserManager(BaseUserManager):
 			_usr.set_password(password)
 			_usr.save(using=self._db)
 			return	_usr
-		
+
 		def	create_superuser(self, nickName, email, password):
 			_usr = self.create_user(
 				nickName		= nickName,
 				email			= email,
 				password		= password,)
 			_usr.is_admin		= True
-			_ust.is_superuser	= True
+			_usr.is_superuser	= True
 			_usr.save(using=self._db)
 			return	_usr
 

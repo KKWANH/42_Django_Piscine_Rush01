@@ -11,13 +11,13 @@
 		<div	class="d-flex align-items-center mb-4 text-muted author-info">
 			<a		class="d-flex align-items-center text-muted text-decoration-none"
 					href="{% url 'Site:profile' object.userID %}">
-					{% if object.userID.profile_image %}
+					{% if object.userID.profileImage %}
 						<img	class="border rounded-circle mb-0 mr-2"
-								src="{{ object.author.profile_image.url }}"
+								src="{{ object.userID.profileImage.url }}"
 								alt="@{{ object.author }}-profile image"
 								width="32"
 								height="32"/>
-					{% elif not object.userID.profile_image %}
+					{% elif not object.userID.profileImage %}
 						<img	class="border rounded-circle mb-0 mr-2"
 								style="background-color: black;"
 								width="32"
@@ -57,6 +57,20 @@
 		<div	class="post-content mx-2">
 			{{ object.content }}
 		</div>
+		<form method="POST" class="col-lg-6 post-up-down" style="margin-left:80%;margin-top:20%;">
+			{% csrf_token %}
+			<input type='hidden' value='{{ object.id }}' name='id'>
+			{% if post_up %}
+				<input type="submit" name="post-up" class="col-lg-2 btn btn-outline-primary" value="UP: {{ object.upvotes.count }}"></input>
+			{% else %}
+				<input type="submit" name="post-up" class="col-lg-2 btn btn-outline-secondary" value="UP: {{ object.upvotes.count }}"></input>
+			{% endif %}
+			{% if post_down %}
+				<input type="submit" name="post-down" class="col-lg-2 btn btn-outline-danger" value="DOWN: {{ object.downvotes.count }}"></input>
+			{% else %}
+				<input type="submit" name="post-down" class="col-lg-2 btn btn-outline-secondary" value="DOWN: {{ object.downvotes.count }}"></input>
+			{% endif %}
+		</form>
 		<!-- <div>
 			<hr/>
 			<form	action="{ % url 'Site:comment' object.id %}" method="post" class="form">

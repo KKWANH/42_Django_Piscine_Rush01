@@ -12,7 +12,9 @@
 				{% for post in object_list %}
 				<tr>
 					<td>
-						<p style="color: white;">{{ post.userID }}</p>
+						<a href="{% url 'Site:profile' post.userID.nickName %}" style="color: white;text-decoration: none;">
+							{{ post.userID }}
+						</a>
 					</td>
 					<td title="{{ post.creationDate|date:"P d.M.y" }}" data-toggle="tooltip" data-placement="top">
 						<a href="{% url 'Site:post-detail' post.id %}" style="color: pink;">

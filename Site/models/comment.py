@@ -13,3 +13,29 @@ class	Comment(models.Model):
 		created		= models.DateTimeField(auto_now_add=True, null=False)
 		updated		= models.DateTimeField(auto_now=True, null=False)
 		is_active	= models.BooleanField(default=True)
+		upvotes		= models.ManyToManyField(MyUser, related_name="commentUpvotes")
+		downvotes	= models.ManyToManyField(MyUser, related_name="commentDownvotes")
+
+		def upvote(self, user):
+			if user.nickName in [usr.nickName for usr in self.upvotes.all()]:
+				self.upvotes.remove(user)
+			else:
+				if user.nickName in [usr.nickName for usr in self.downvotes.all()]:
+					self.downvotes.remove(user)
+				self.upvotes.add(user)
+			self.save()
+
+		def upvote(self, user):
+			if user.nickName in [usr.nickName for usr in self.downvotes.all()]:
+				self.downvotes.remove(user)
+			else:
+				if user.nickName in [usr.nickName for usr in self.upvotes.all()]:
+					self.upvotes.remove(user)
+				self.downvotes.add(user)
+			self.save()
+
+		def get_upvotes(self):
+			return self.upvotes.count()
+
+		def get_downvotes(self):
+			return self.downvotes.count()

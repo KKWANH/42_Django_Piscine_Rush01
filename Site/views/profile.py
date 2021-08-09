@@ -65,7 +65,7 @@ class	ProfileView(FormView):
 				_usr.description	= form.cleaned_data['description']
 				if form.cleaned_data['myAdmin'] and form.cleaned_data['myAdmin'] == 'Y':
 					_usr.is_admin	= True
-				else:
+				elif form.cleaned_data['myAdmin'] and form.cleaned_data['myAdmin'] == 'N':
 					_usr.is_admin	= False
 				_usr.save()
 				return	super().form_valid(form)

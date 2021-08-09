@@ -6,11 +6,11 @@
 {% endblock title %}
 
 {% block content %}
-	<h2 style='text-align:center'>Profile of {{ view.kwargs.pk }}</h2>
+	<h2 style='padding-top:3%;text-align:center'>Profile of {{ view.kwargs.pk }}</h2>
 	<br><br>
 	<form method="post" enctype="multipart/form-data" style="padding-left:10%;padding-right: 10%;">
 		{% csrf_token %}
-		{% if not owner and not admin %}
+		{% if not owner and not request.user.is_admin %}
 			<fieldset class="form-group" style="border: solid;" disabled>
 		{% else %}
 			<fieldset class="form-group" style="border: solid;">
@@ -18,7 +18,9 @@
 		{% for field in form %}
 			<br>
 			<div style="padding-left:5%;display:flex;align-items:center;">
-			{{ field.label_tag }}&nbsp&nbsp
+				<div class="col-lg-2">
+					{{ field.label_tag }}
+				</div>
 			{% if field.label == "ProfileImage"%}
 				{% if field.initial %}
 					<div style="display:flex;align-items: center;">
@@ -29,15 +31,17 @@
 				{% if field.label == "Is_Admin" and not admin %}
 					<fieldset disabled>
 				{% endif %}
+				<div class="col-lg-6">
 				{{ field }}
+				</div>
 				{% if field.label == "Is_Admin" and not admin %}
 					</fieldset>
 				{% endif %}
 			{% endif %}
 			</div>
 			{% if field.label == "ProfileImage"%}
-				{% if owner or admin %}
-					<div style="padding-left:5%;">
+				{% if owner or request.user.is_admin %}
+					<div style="padding-left:10%;">
 						<input type="file" name="profileImage" accept="image/*" id="id_profileImage">
 					</div>
 				{% endif %}
@@ -47,8 +51,8 @@
 			{% endfor %}
 		{% endfor %}
 			</fieldset>
-		{% if owner or admin %}
-			<button type="submit">Submit</button>
+		{% if owner or request.user.is_admin %}
+			<button style="margin-left:90%;" class="btn btn-lg btn-outline-secondary" type="submit">Submit</button>
 		{% endif %}
 	</form>
 	{% if start%}

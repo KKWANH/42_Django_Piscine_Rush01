@@ -5,48 +5,47 @@
 {% endblock title %}
 
 {% block content %}
-	<br>
-	<h2 style="text-align: center;">Discussion List</h2>
+	<h2 style="padding-top:3%;text-align: center;">Discussion List</h2>
 	<br><br>
-	<div class="card-columns" style="min-height: 70vh;">
+	<div class="card-columns" style="min-height: 70vh;padding-left:5%;padding-right: 5%;">
 		{% if object_list %}
 			{% for item in object_list %}
-				<div class="card p-6 bg-light border-light">
-					<div class="card-header">
+				<div class="card p-6 border-secondary bg-transparent" >
+					<div class="card-header border-secondary">
 					{% if item.sender.nickName == request.user.nickName %}
-						<a href="{% url 'Site:discussionDetail' user1=request.user.nickName user2=item.receiver.nickName %}">
+						<a href="{% url 'Site:discussionDetail' user1=request.user.nickName user2=item.receiver.nickName %}" style="color: pink;">
 							Discussion with {{ item.receiver.nickName }}</a>
 					{% else %}
-						<a href="{% url 'Site:discussionDetail' user1=request.user.nickName user2=item.sender.nickName %}">
+						<a href="{% url 'Site:discussionDetail' user1=request.user.nickName user2=item.sender.nickName %}" style="color: pink;">
 							Discussion with {{ item.sender.nickName }}</a>
 					{% endif %}
 					</div>
-					<div class="card-body text-dark">
-						<p>From: {{ item.sender.nickName }}</p>
-						<p>To: {{ item.receiver.nickName }}</p>
-						<p>{{ item.content|truncatechars:30 }}</p>
+					<div class="card-body text-dark border-secondary" >
+						<p style="color:white">From: {{ item.sender.nickName }}</p>
+						<p style="color:white">To: {{ item.receiver.nickName }}</p>
+						<p style="color:white">{{ item.content|truncatechars:30 }}</p>
 					</div>
-					<div class="card-footer text-muted">
+					<div class="card-footer text-muted border-secondary">
 						<p>{{ item.created }}</p>
 					</div>
 				</div><br>
 			{% endfor %}
 		{% else %}
-			<h3 style="align-self: center;">No Discussion</h3>
 		{% endif %}
 	</div>
+	<br>
 	<div class="pagination" style="justify-content: center;">
 		<span class="step-links">
 			{% if page_obj.has_previous %}
-				<a href="?page=1">&laquo; First</a>
-				<a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+				<a href="?page=1" style="color: pink;">&laquo; First</a>
+				<a href="?page={{ page_obj.previous_page_number }}" style="color: pink;">Previous</a>
 			{% endif %}
 				<span class="current">
 				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
 				</span>
 			{% if page_obj.has_next %}
-				<a href="?page={{ page_obj.next_page_number }}">Next</a>
-				<a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+				<a href="?page={{ page_obj.next_page_number }}" style="color: pink;">Next</a>
+				<a href="?page={{ page_obj.paginator.num_pages }}" style="color: pink;">Last &raquo;</a>
 			{% endif %}
 		</span>
 	</div>
