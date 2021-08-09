@@ -7,7 +7,6 @@ ALLOWED_HOSTS = ['localhost']
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 INSTALLED_APPS = [
-	'channels',
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -47,13 +46,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Rush01.wsgi.application'
-ASGI_APPLICATION = 'Rush01.routing.application'
 
-CHANNEL_LAYERS = {
-	'default': {
-		'BACKEND': 'channels.layers.InMemoryChannelLayer',
-	}
-}
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.sqlite3',
