@@ -12,6 +12,5 @@ redis==2.10.5
 six==1.10.0
 Twisted==21.7.0
 txaio==21.2.1
-uWSGI==2.0.14
 django-bootstrap4==3.0.1
-zope.interface==4.4.2
+zope.interface==5.4.0
