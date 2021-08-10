@@ -10,13 +10,6 @@ class	DiscussionListView(ListView):
 		model			= Message
 		template_name	= 'Site/view/discussion_list.html'
 
-		def	get(self, request, *args, **kwargs):
-			if self.request.user.nickName == self.kwargs.get('user1'):
-				return	super().get(request, *args, **kwargs)
-			else:
-				messages.error(request, "⚠️ Permission denied ⚠️")
-				return	redirect("Site:main")
-
 		def get_queryset(self):
 			_usr	 =  MyUser.objects.get(nickName=self.request.user.nickName)
 			_msg =  Message.objects.filter(sender=_usr, last=True)
@@ -36,6 +29,14 @@ class	DiscussionDetailView(ListView):
 			_msg =  Message.objects.filter(sender=_us1, receiver=_us2)
 			_msg |= Message.objects.filter(sender=_us2, receiver=_us1)
 			return	_msg.order_by('created')
+
+		def	get(self, request, *args, **kwargs):
+			if self.request.user.nickName == self.kwargs.get('user1'):
+				return	super().get(request, *args, **kwargs)
+			else:
+				messages.error(request, "⚠️ Permission denied ⚠️")
+				return	redirect("Site:main")
+
 
 		def post(self, request, user1, user2):
 			if request.POST.get('content'):
