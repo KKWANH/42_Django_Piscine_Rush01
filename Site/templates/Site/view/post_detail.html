@@ -86,7 +86,7 @@
 				<br><br>
 				{% for comment in object.get_comments %}
 					{% include 'Site/view/post_comment.html' with comment=comment %}
-					{% endfor %}
+				{% endfor %}
 			{% endif %}
 		</div>
 	</div>
