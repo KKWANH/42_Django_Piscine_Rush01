@@ -1,0 +1,22 @@
+version: '3'
+services:
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: bash -c "python3 /code/manage.py makemigrations && python3 /code/manage.py migrate && gunicorn Rush01.wsgi:application --bind 0.0.0.0:8000"
+        volumes:
+            - .:/code
+        ports:
+            - "8000:8000"
+        expose:
+            - "8000"
+    nginx:
+        image: nginx:latest
+        ports:
+            - "80:80"
+        volumes:
+            - .:/code
+            - ./config/nginx:/etc/nginx/nginx.conf.d
+        depends_on:
+            - web
