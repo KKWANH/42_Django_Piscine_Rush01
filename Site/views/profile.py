@@ -27,7 +27,6 @@ class	ProfileView(FormView):
 		def get_context_data(self, **kwargs):
 			_ctx		= super().get_context_data(**kwargs)
 			_usr		= MyUser.objects.get(nickName=str(self.kwargs.get('pk')))
-			print(self.request.user.is_superuser)
 			if (not _usr.is_superuser) and (self.request.user.is_superuser):
 				_ctx['admin'] = True
 			else:

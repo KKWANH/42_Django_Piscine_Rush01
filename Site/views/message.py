@@ -31,8 +31,12 @@ class	DiscussionDetailView(ListView):
 			return	_msg.order_by('created')
 
 		def	get(self, request, *args, **kwargs):
-			if self.request.user.nickName == self.kwargs.get('user1'):
+			if self.kwargs.get('user1') == self.kwargs.get('user2'):
+				return	redirect("Site:main")
+			elif self.request.user.nickName == self.kwargs.get('user1'):
 				return	super().get(request, *args, **kwargs)
+			elif self.request.user.nickName == self.kwargs.get('user2'):
+				return redirect("Site:discussionDetail", self.kwargs.get('user2'),  self.kwargs.get('user1'))
 			else:
 				messages.error(request, "⚠️ Permission denied ⚠️")
 				return	redirect("Site:main")
