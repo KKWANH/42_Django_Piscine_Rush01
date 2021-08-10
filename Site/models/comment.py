@@ -18,20 +18,20 @@ class	Comment(models.Model):
 
 		class	Meta:
 				ordering = ('created',)
-		
+
 		def	__str__(self):
 			return	self.comment
-	
+
 		def	get_comments(self):
 			return	Comment.objects.filter(parent=self, is_active=True)
-		
+
 		def	get_replyform(self):
 			from	Site.forms.comment	import	CommentForm
 			_frm = CommentForm()
 			_frm.fields['parent'].initial = self.id
 			return	_frm
-		
-		def	upvotes(self, user):
+
+		def	upvote(self, user):
 			if user.nickName in [_usr.nickName for _usr in self.upvotes.all()]:
 				self.upvotes.remove(user)
 			else:
@@ -39,8 +39,8 @@ class	Comment(models.Model):
 					self.downvotes.remove(user)
 				self.upvotes.add(user)
 			self.save()
-		
-		def	downvotes(self, user):
+
+		def	downvote(self, user):
 			if user.nickName in [_usr.nickName for _usr in self.downvotes.all()]:
 				self.downvotes.remove(user)
 			else:
@@ -48,9 +48,9 @@ class	Comment(models.Model):
 					self.upvotes.remove(user)
 				self.downvotes.add(user)
 			self.save()
-		
+
 		def	get_upvotes(self):
 			return	self.upvotes.count()
-		
+
 		def	get_downvotes(self):
 			return	self.downvotes.count()

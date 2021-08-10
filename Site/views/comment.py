@@ -27,10 +27,10 @@ class	CommentView(LoginRequiredMixin, PostCheckMixin, FormView):
 
 		def	get_success_url(self) -> str:
 			return	reverse('Site:post-detail', kwargs={'post_id': self.kwargs.get('post_id')})
-		
+
 		def	get(self, *args, **kwargs):
 			raise	Http404
-		
+
 		def	get_initial(self) -> Dict[str, Any]:
 			_ini			= super().get_initial()
 			return	_ini
@@ -52,6 +52,22 @@ class	CommentView(LoginRequiredMixin, PostCheckMixin, FormView):
 		def	form_invalid(self, form: CommentForm) -> HttpResponse:
 			messages.error(self.request, "⚠️ Delete Failed ⚠️")
 			return	super().form_invalid(form)
+
+		def post(self, request, *args, **kwargs):
+			_cid = self.request.POST.get('id')
+			if _cid:
+				try:
+					if request.POST.get("comment-up"):
+						_cmt = Comment.objects.get(id=_cid)
+						_cmt.upvote(request.user)
+						return redirect("Site:post-detail", _cmt.postID.id)
+					elif request.POST.get("comment-down"):
+						_cmt =  Comment.objects.get(id=_cid)
+						_cmt.downvote(request.user)
+						return redirect("Site:post-detail", _cmt.postID.id)
+				except Exception as _exc:
+					print(_exc)
+			return super().post(request, *args, **kwargs)
 
 class	CommentDeleteView(LoginRequiredMixin, PostCheckMixin, RedirectView):
 		def	get_redirect_url(self, *args: Any, **kwargs: Any) -> Optional[str]:

@@ -24,7 +24,7 @@
 		</a>
 		<hr>
 		<p class="comment-body">{{comment}}</p>
-		<div class="reply mb-2 btn_delete">
+		<div class="reply mb-2 btn_delete" style="display:flex;">
 			{% if comment.userID == user %}
 				<script>
 					function	comment_remove_btn()
@@ -45,6 +45,20 @@
 				Reply
 				</a>
 			</button>
+			<form method="POST" action="{% url 'Site:comment' comment.postID.id %}" class="comment-up-down"style="float: right; margin-left: auto;">
+				{% csrf_token %}
+				<input type='hidden' value='{{ comment.id }}' name='id'>
+				{% if request.user in comment.upvotes.all %}
+					<input type="submit" name="comment-up" class="btn btn-outline-primary" value="UP: {{ comment.upvotes.count }}"></input>
+				{% else %}
+					<input type="submit" name="comment-up" class="btn btn-outline-secondary" value="UP: {{ comment.upvotes.count }}"></input>
+				{% endif %}
+				{% if request.user in comment.downvotes.all %}
+					<input type="submit" name="comment-down" class="btn btn-outline-danger" value="DOWN: {{ comment.downvotes.count }}"></input>
+				{% else %}
+					<input type="submit" name="comment-down" class="btn btn-outline-secondary" value="DOWN: {{ comment.downvotes.count }}"></input>
+				{% endif %}
+			</form>
 		</div>
 		<form	id="comment-form-{{comment.id}}"
 				action="{% url 'Site:comment' comment.postID.id %}"
