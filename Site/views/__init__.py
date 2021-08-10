@@ -1,7 +1,8 @@
-from	.main							import	*
-from	.login							import	*
-from	.logout							import	*
-from	.register						import	*
-from	.message						import	*
-from	.profile						import	*
-from	.post							import	*
+from	.main							import	Main
+from	.login							import	Login
+from	.logout							import	Logout
+from	.register						import	Register
+from	.message						import	DiscussionDetailView, DiscussionListView
+from	.profile						import	ProfileView
+from	.post							import	PostView, PostDetailView, PostEditView, PostDeleteView
+from	.comment						import	CommentView, CommentDeleteView

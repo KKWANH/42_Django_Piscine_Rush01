@@ -5,63 +5,63 @@
 {% endblock title %}
 
 {% block content %}
-<h2 style="padding-top:3%;text-align: center;">
-	Discussion with
-	<a href="{% url 'Site:profile' view.kwargs.user2 %}" style="color: white;">
-		{{ view.kwargs.user2 }}
-	</a>
-</h2>
-<br><br>
-<fieldset id="message-log" style="height:70vh;overflow-y:scroll;margin-right: 10%;margin-left:10%;border: solid;padding-top:1%;padding-bottom: 1%;margin-bottom: 3%;">
-	{% for item in object_list %}
-		{% if item.sender.nickName == request.user.nickName %}
-			<div style='text-align:right;padding-right:5%;'>
-		{% else %}
-			<div style='text-align:left;padding-left:5%'>
-		{% endif %}
-			<p>{{ item.content }}</p>
-			<p>
-				{% if item.sender.nickName == request.user.nickName %}
-					<a	class=" text-muted text-decoration-none"
-					href="{% url 'Site:profile' item.sender.nickName %}">
-					{% if item.sender.profileImage %}
-						<img	class="border rounded-circle mb-0 mr-2"
-								src="{{ item.sender.profileImage.url }}"
-								alt="@{{ item.sender }}-profile image"
-								width="32"
-								height="32"/>
-					{% elif not item.sender.profileImage %}
-						<img	class="border rounded-circle mb-0 mr-2"
-								style="background-color: black;"
-								width="32"
-								height="32"/>
+	<h2 style="padding-top:3%;text-align: center;">
+		Discussion with
+		<a href="{% url 'Site:profile' view.kwargs.user2 %}" style="color: white;">
+			{{ view.kwargs.user2 }}
+		</a>
+	</h2>
+	<br><br>
+	<fieldset id="message-log" style="height:70vh;overflow-y:scroll;margin-right: 10%;margin-left:10%;border: solid;padding-top:1%;padding-bottom: 1%;margin-bottom: 3%;">
+		{% for item in object_list %}
+			{% if item.sender.nickName == request.user.nickName %}
+				<div style='text-align:right;padding-right:5%;'>
+			{% else %}
+				<div style='text-align:left;padding-left:5%'>
+			{% endif %}
+				<p>{{ item.content }}</p>
+				<p>
+					{% if item.sender.nickName == request.user.nickName %}
+						<a	class=" text-muted text-decoration-none"
+						href="{% url 'Site:profile' item.sender.nickName %}">
+						{% if item.sender.profileImage %}
+							<img	class="border rounded-circle mb-0 mr-2"
+									src="{{ item.sender.profileImage.url }}"
+									alt="@{{ item.sender }}-profile image"
+									width="32"
+									height="32"/>
+						{% elif not item.sender.profileImage %}
+							<img	class="border rounded-circle mb-0 mr-2"
+									style="background-color: black;"
+									width="32"
+									height="32"/>
+						{% endif %}
+						<span>{{ item.sender.nickName }}</span></a>
+					{% else %}
+						<a	class=" text-muted text-decoration-none"
+						href="{% url 'Site:profile' item.receiver.nickName %}">
+						{% if item.receiver.profileImage %}
+							<img	class="border rounded-circle mb-0 mr-2"
+									src="{{ item.receiver.profileImage.url }}"
+									alt="@{{ item.receiver }}-profile image"
+									width="32"
+									height="32"/>
+						{% elif not item.receiver.profileImage %}
+							<img	class="border rounded-circle mb-0 mr-2"
+									style="background-color: black;"
+									width="32"
+									height="32"/>
+						{% endif %}
+						<span>{{ item.receiver.nickName }}</span></a>
 					{% endif %}
-					<span>{{ item.sender.nickName }}</span></a>
-				{% else %}
-					<a	class=" text-muted text-decoration-none"
-					href="{% url 'Site:profile' item.receiver.nickName %}">
-					{% if item.receiver.profileImage %}
-						<img	class="border rounded-circle mb-0 mr-2"
-								src="{{ item.receiver.profileImage.url }}"
-								alt="@{{ item.receiver }}-profile image"
-								width="32"
-								height="32"/>
-					{% elif not item.receiver.profileImage %}
-						<img	class="border rounded-circle mb-0 mr-2"
-								style="background-color: black;"
-								width="32"
-								height="32"/>
-					{% endif %}
-					<span>{{ item.receiver.nickName }}</span></a>
-				{% endif %}
-			</p>
-			<p>({{ item.created }})</p>
-		</div><br>
-	{% endfor %}
-</fieldset>
-<form style="text-align: center;" method="POST">
-	{% csrf_token %}
-	<textarea id="message-input" type="text" style="width:60vw" name='content'></textarea><br>
-	<button id="message-submit" type="submit">Submit</button>
-</form>
+				</p>
+				<p>({{ item.created }})</p>
+			</div><br>
+		{% endfor %}
+	</fieldset>
+	<form style="text-align: center;" method="POST">
+		{% csrf_token %}
+		<textarea id="message-input" type="text" style="width:60vw" name='content'></textarea><br>
+		<button id="message-submit" type="submit">Submit</button>
+	</form>
 {% endblock content %}

@@ -25,7 +25,9 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		{% if not object_list %}
+		{% if object_list %}
+			{% include 'Site/view/main_pagenation.html' %}
+		{% elif not object_list %}
 			<h1 style="text-align: center; margin-top: 300px; font-size: 90px">
 				Sorry 😓
 			</h1>
@@ -37,6 +39,5 @@
 			</h1>
 		{% endif %}
 	</div>
-	<!-- { % include 'Site/view/pagenation.html' %} -->
 </div>
 {% endblock content %}

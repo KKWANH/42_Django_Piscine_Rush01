@@ -10,7 +10,7 @@ from	django.shortcuts				import	redirect, render
 from	django.views.generic			import	FormView, DetailView, RedirectView
 from	Site.models.post				import	Post
 from	Site.models.comment				import	Comment
-from	Site.forms						import	PostForm
+from	Site.forms						import	PostForm, CommentForm
 
 
 class	PostUserCheckMixin:
@@ -63,22 +63,24 @@ class	PostDetailView(LoginRequiredMixin, DetailView):
 				_ctx['post_up'] = True
 			if _pst.is_downvoting(self.request.user):
 				_ctx['post_down'] = True
+			_ctx["comment_form"] = CommentForm()
 			return	_ctx
-
+		
 		def post(self, request, post_id):
-			_id = self.request.POST.get('id')
-			if _id:
+			_pid = self.request.POST.get('id')
+			if _pid:
 				try:
 					if request.POST.get("post-up"):
-						_pst = Post.objects.get(id=_id)
+						_pst = Post.objects.get(id=_pid)
 						_pst.upvote(request.user)
 					elif request.POST.get("post-down"):
-						_pst = Post.objects.get(id=_id)
+						_pst = Post.objects.get(id=_pid)
 						_pst.downvote(request.user)
 					return redirect("Site:post-detail", post_id)
-				except Exception as e:
-					print(e)
+				except Exception as _exc:
+					print(_exc)
 			return	redirect("Site:main")
+
 class	PostEditView(LoginRequiredMixin, PostUserCheckMixin, FormView):
 		template_name		= 'Site/view/post_edit.html'
 		login_url			= reverse_lazy('Site:login')
@@ -108,9 +110,9 @@ class	PostDeleteView(LoginRequiredMixin, PostUserCheckMixin, RedirectView):
 
 		def get(self, request: http.HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
 			self.instance.is_active = False
-			# for _cmt in self.instance.get_comments():
-			# 	_cmt.is_active = False
-			# 	_cmt.save()
+			for _cmt in self.instance.get_comments():
+				_cmt.is_active = False
+				_cmt.save()
 			self.instance.save()
 			messages.info(request, "✅ Delete post success ✅")
 			return	super().get(request, *args, **kwargs)

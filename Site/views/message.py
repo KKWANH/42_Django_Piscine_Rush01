@@ -1,13 +1,21 @@
 from	django.views.generic			import	ListView
+from	django.contrib					import	messages
 from	django.shortcuts				import	redirect, render
 from	django.urls						import	reverse_lazy
 from	Site.models.myuser				import	MyUser
 from	Site.models.message				import	Message
-from	django.contrib					import	messages
+
 class	DiscussionListView(ListView):
 		paginate_by		= 10
 		model			= Message
 		template_name	= 'Site/view/discussion_list.html'
+
+		def	get(self, request, *args, **kwargs):
+			if self.request.user.nickName == self.kwargs.get('user1'):
+				return	super().get(request, *args, **kwargs)
+			else:
+				messages.error(request, "⚠️ Permission denied ⚠️")
+				return	redirect("Site:main")
 
 		def get_queryset(self):
 			_usr	 =  MyUser.objects.get(nickName=self.request.user.nickName)
@@ -21,13 +29,6 @@ class	DiscussionDetailView(ListView):
 		model			= Message
 		fields			= ['content']
 		template_name	= 'Site/view/discussion_detail.html'
-
-		def get(self, request, *args, **kwargs):
-			if self.request.user.nickName == self.kwargs.get('user1'):
-				return super().get(request, *args, **kwargs)
-			else:
-				messages.error(request, "⚠️ Permission denied ⚠️")
-				return	redirect("Site:main")
 
 		def get_queryset(self):
 			_us1 =  MyUser.objects.get(nickName=str(self.kwargs.get('user1')))

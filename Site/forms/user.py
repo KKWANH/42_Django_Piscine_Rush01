@@ -80,14 +80,3 @@ class	UserCreationForm(forms.ModelForm):
 				_usr.save()
 			print("debug3")
 			return	_usr
-			
-# class	RegisterForm(UserCreationForm):
-# 		nickName		= forms.CharField(max_length=25)
-# 		email			= forms.EmailField()
-# 		firstName		= forms.CharField(max_length=25)
-# 		lastName		= forms.CharField(max_length=25)
-# 		description		= forms.Textarea()
-
-# 		class Meta:
-# 			model = MyUser
-# 			fields = ("nickName", "email", "password1", "password2")

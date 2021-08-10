@@ -14,12 +14,12 @@
 					{% if object.userID.profileImage %}
 						<img	class="border rounded-circle mb-0 mr-2"
 								src="{{ object.userID.profileImage.url }}"
-								alt="@{{ object.author }}-profile image"
+								alt="@{{ object.userID }}-profile image"
 								width="32"
 								height="32"/>
 					{% elif not object.userID.profileImage %}
 						<img	class="border rounded-circle mb-0 mr-2"
-								style="background-color: black;"
+								style="background-color: white;"
 								width="32"
 								height="32"/>
 					{% endif %}
@@ -71,21 +71,23 @@
 				<input type="submit" name="post-down" class="col-lg-2 btn btn-outline-secondary" value="DOWN: {{ object.downvotes.count }}"></input>
 			{% endif %}
 		</form>
-		<!-- <div>
+		<div>
 			<hr/>
-			<form	action="{ % url 'Site:comment' object.id %}" method="post" class="form">
-				{% csrf_token %} { % bootstrap_form comment_form %}
+			<form	action="{% url 'Site:comment' object.id %}" method="post" class="form">
+				{% csrf_token %}
+				{% bootstrap_form comment_form %}
 				{% buttons %}
 				{% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
 				{% endbuttons %}
 			</form>
-			{% if not object.comments.all %}
+			{% if not object.get_comments %}
 				No comments yet
 			{% else %}
+				<br><br>
 				{% for comment in object.get_comments %}
-					{ % include 'Site/view/post_comment.html' with comment=comment %}
+					{% include 'Site/view/post_comment.html' with comment=comment %}
 				{% endfor %}
 			{% endif %}
-		</div> -->
+		</div>
 	</div>
 {% endblock content %}
