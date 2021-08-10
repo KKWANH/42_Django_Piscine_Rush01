@@ -1,9 +1,13 @@
 FROM	python:3.9
 
-RUN		mkdir /code
-WORKDIR	/code
-COPY	. /code
-RUN		python3 -m pip install --upgrade pip
-RUN		pip install -r requirement.txt
-RUN		python3 /code/manage.py makemigrations
-RUN		python3 /code/manage.py migrate
+RUN		mkdir /usr/src/app
+WORKDIR		/usr/src/app
+
+ENV		PYTHONUNBUFFERED 1
+ENV		PYTHONDONTWRITEBYTECODE 1
+
+COPY		./requirement.txt .
+RUN		python -m pip install --upgrade pip
+RUN		python -m pip install -r requirement.txt
+
+COPY		. .
