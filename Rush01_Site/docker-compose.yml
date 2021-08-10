@@ -17,6 +17,8 @@ services:
             - "80:80"
         volumes:
             - .:/code
-            - ./config/nginx:/etc/nginx/nginx.conf.d
+            - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf.d
+            - ./config/nginx/django.crt:/etc/ssl/certs/django.crt
+            - ./config/nginx/django.key:/etc/ssl/private/django.key
         depends_on:
             - web
