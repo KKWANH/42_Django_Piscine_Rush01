@@ -5,10 +5,10 @@
 {% endblock title %}
 
 {% block content %}
-	<h2 style="padding-top:3%;text-align: center;">Discussion List</h2>
-	<br><br>
-	<div class="card-columns" style="min-height: 70vh;padding-left:5%;padding-right: 5%;">
-		{% if object_list %}
+	{% if object_list %}
+		<h2 style="padding-top:3%;text-align: center;">Discussion List</h2>
+		<br><br>
+		<div class="card-columns" style="min-height: 70vh;padding-left:5%;padding-right: 5%;">
 			{% for item in object_list %}
 				<div class="card p-6 border-secondary bg-transparent" >
 					<div class="card-header border-secondary">
@@ -30,23 +30,32 @@
 					</div>
 				</div><br>
 			{% endfor %}
-		{% else %}
-		{% endif %}
-	</div>
-	<br>
-	<div class="pagination" style="justify-content: center;">
-		<span class="step-links">
-			{% if page_obj.has_previous %}
-				<a href="?page=1" style="color: pink;">&laquo; First</a>
-				<a href="?page={{ page_obj.previous_page_number }}" style="color: pink;">Previous</a>
-			{% endif %}
-				<span class="current">
-				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-				</span>
-			{% if page_obj.has_next %}
-				<a href="?page={{ page_obj.next_page_number }}" style="color: pink;">Next</a>
-				<a href="?page={{ page_obj.paginator.num_pages }}" style="color: pink;">Last &raquo;</a>
-			{% endif %}
-		</span>
-	</div>
+		</div>
+		<br>
+		<div class="pagination" style="justify-content: center;">
+			<span class="step-links">
+				{% if page_obj.has_previous %}
+					<a href="?page=1" style="color: pink;">&laquo; First</a>
+					<a href="?page={{ page_obj.previous_page_number }}" style="color: pink;">Previous</a>
+				{% endif %}
+					<span class="current">
+					Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+					</span>
+				{% if page_obj.has_next %}
+					<a href="?page={{ page_obj.next_page_number }}" style="color: pink;">Next</a>
+					<a href="?page={{ page_obj.paginator.num_pages }}" style="color: pink;">Last &raquo;</a>
+				{% endif %}
+			</span>
+		</div>
+	{% else %}
+		<h1 style="text-align: center; margin-top: 300px; font-size: 90px">
+			Sorry 🙃
+		</h1>
+		<h1 style="text-align: center; font-size: 60px">
+			We've looked around here,<br>but none of discussions exist..
+		</h1>
+		<h1 style="text-align: center; font-size: 40px; color: rgb(165, 165, 165)">
+			Maybe you could discuss something for us?
+		</h1>
+	{% endif %}
 {% endblock content %}

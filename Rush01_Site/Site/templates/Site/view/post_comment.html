@@ -33,7 +33,7 @@
 				<button onclick="comment_remove_btn()"
 						style="color: #fff; background-color: #fd310d; border-color: #fd310d;"
 						class="btn">
-					<a	id="Remove_Btn_A" href="{% url 'Site:comment-delete' comment.post_id=comment.postID.id comment_id=comment.id %}"
+					<a	id="Remove_Btn_A" href="{% url 'Site:comment-delete' comment.postID.id comment.id %}"
 						style="color: white; text-decoration:none;">
 						Delete
 					</a>

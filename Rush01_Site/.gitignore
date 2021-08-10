@@ -1,7 +1,0 @@
-### Django ###
-*.log
-*.pot
-*.pyc
-__pycache__/
-Rush01.sqlite3
-media

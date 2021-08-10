@@ -3,6 +3,5 @@
 *.pot
 *.pyc
 __pycache__/
-db.sqlite3
+Rush01.sqlite3
 media
-static
