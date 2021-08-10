@@ -23,8 +23,5 @@ services:
             - ./static:/usr/src/app/static
             - ./media:/usr/src/app/media
             - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
-            - ./config/nginx/openssl.cnf:/etc/ssl/openssl.cnf
-            - ./config/nginx/django.crt:/etc/ssl/certs/django.crt
-            - ./config/nginx/django.key:/etc/ssl/private/django.key
         depends_on:
             - app

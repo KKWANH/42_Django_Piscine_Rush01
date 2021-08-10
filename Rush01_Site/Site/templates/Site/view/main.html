@@ -17,7 +17,7 @@
 								{{ post.userID }}
 							</a>
 						</td>
-						<td title="{{ post.creationDate|date:"P d.M.y" }}" data-toggle="tooltip" data-placement="top">
+						<td title="{{ post.created|date:"P d.M.y" }}" data-toggle="tooltip" data-placement="top">
 							<a href="{% url 'Site:post-detail' post.id %}" style="color: pink;">
 								{{ post.title }}
 							</a>
